@@ -22,4 +22,14 @@ class UploadedImageRequest(BaseModel):
     filename: Optional[str] = "exported.png"
     imageBase64: str
 
-# 更多模型可以根据需要从Java DTO迁移...
+
+# --- 【新增】Inpainting 接口模型 ---
+class IopaintRequest(BaseModel):
+    # 中文备注：字段名与Java代码保持一致
+    image: str = Field(..., description="源图的 Base64 编码")
+    mask: str = Field(..., description="蒙版图的 Base64 编码")
+
+
+class UploadIoInpaintImageRequest(BaseModel):
+    # 中文备注：字段名与Java代码保持一致
+    imageData: str = Field(..., description="修复后图片的 Base64 编码")
