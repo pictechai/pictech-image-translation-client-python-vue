@@ -4,7 +4,7 @@ import os
 import uuid
 from datetime import datetime
 from fastapi import UploadFile
-
+from pathlib import Path
 from backend.app.clients.pictech_api_client import pictech_client
 from .. import config
 import logging  # 新增：导入 logging 模块
@@ -104,6 +104,7 @@ class TranslationService:
             # 2. 确定保存路径
             save_path = "iopaint_front"
             date_folder = datetime.now().strftime("%Y-%m-%d")
+            # 中文备注：文件物理保存路径仍然是 "uploads/iopaint_front/..."
             directory_path = Path(config.UPLOAD_DIR) / save_path / date_folder
             directory_path.mkdir(parents=True, exist_ok=True)
 
@@ -114,9 +115,8 @@ class TranslationService:
             with open(physical_file_path, "wb") as f:
                 f.write(image_bytes)
 
-            # 4. 构造并返回前端可访问的 URL
-            # 中文备注：URL路径分隔符应始终为 '/'
-            final_url = f"/{save_path}/{date_folder}/{unique_filename}"
+            # 4. 【核心修复】构造并返回包含 "/uploads" 前缀的完整 URL，以匹配 main.py 中的挂载
+            final_url = f"/uploads/{save_path}/{date_folder}/{unique_filename}"
             logger.info(f"返回给前端的 URL: {final_url}")
             return final_url
 

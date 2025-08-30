@@ -15,8 +15,6 @@ router = APIRouter(
     tags=["Translation"]  # 用于API文档分组
 )
 
-logger = logging.getLogger(__name__)
-
 
 # --- 【新增】辅助方法，用于创建标准响应体 (类似Java中的实现) ---
 def create_success_response(url: str) -> Dict[str, Any]:
