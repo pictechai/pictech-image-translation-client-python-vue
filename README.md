@@ -107,7 +107,7 @@ pip install -r requirements.txt
 ```
 
 #### 2.3 配置环境变量
-复制 `backend/.env.example` 为 `backend/.env`，并填写 PicTech API 相关信息：
+修改 backend/config.py，并填写 PicTech API 相关信息：
 ```dotenv
 # .env 文件内容
 PICOTECH_BASE_URL="http://example.com"
